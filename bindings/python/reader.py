@@ -793,7 +793,7 @@ class IntegerFieldDeclaration(FieldDeclaration):
     @property
     def base(self):
         """
-        Integer's base (``int``), or a negative value on error.
+        Integer's base (:class:`int`), or a negative value on error.
         """
 
         return nbt._bt_ctf_get_int_base(self._fd)
