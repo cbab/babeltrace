@@ -1209,10 +1209,17 @@ class IntegerField(Field):
 
 
 class EnumerationField(Field):
+    """
+    Enumeration field, based on an
+    :class:`EnumerationFieldDeclaration` object.
+    """
+
     @property
     def container(self):
         """
-        Return the enumeration's underlying container field (an integer field).
+        Underlying container's :class:`IntegerField`.
+
+        :exc:`TypeError` is raised on error.
         """
 
         container = IntegerField.__new__(IntegerField)
@@ -1226,7 +1233,12 @@ class EnumerationField(Field):
     @property
     def value(self):
         """
-        Get the enumeration field's mapping name.
+        Current enumeration field's label (:class:`str`).
+
+        Set this attribute to an integer (:class:`int`) to change the
+        enumeration field's value.
+
+        :exc:`ValueError` is raised on error.
         """
 
         value = nbt._bt_ctf_field_enumeration_get_mapping_name(self._f)
@@ -1238,11 +1250,6 @@ class EnumerationField(Field):
 
     @value.setter
     def value(self, value):
-        """
-        Set the enumeration field's value. Must be an integer as mapping names
-        may be ambiguous.
-        """
-
         if not isinstance(value, int):
             raise TypeError("EnumerationField value must be an int")
 
