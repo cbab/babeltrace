@@ -6,21 +6,21 @@ Reader API
 
 .. currentmodule:: babeltrace.reader
 
-The classes documented below are related to **reading traces**, that
-is, adding one to many traces to a trace collection, iterating their
-events, and reading the event names, timestamps, contexts and payloads.
+The classes documented below are related to **reading traces**
+operations. Common operations such as adding traces to a trace
+collection, iterating on their events, reading event names,
+timestamps, contexts and payloads can be accomplished by using these
+classes.
 
-The Babeltrace Python binding's reader API has two categories of
-available types, all in the :mod:`babeltrace.reader` module. The first
-one can be used to open traces and iterate theirs events.
-
-The typical scenario for reading one to many traces is:
+The Babeltrace Python bindings' reader API exposes two categories of
+classes. The first category is used to open traces and iterate on
+theirs events. The typical procedure for reading traces is:
 
 1. Create a :class:`TraceCollection` instance.
 2. Add traces to this collection using
    :meth:`TraceCollection.add_trace`.
-3. Iterate :attr:`TraceCollection.events` to get :class:`Event`
-   objects and perform your analysis in Python using them.
+3. Iterate on :attr:`TraceCollection.events` to get :class:`Event`
+   objects and perform the desired computation on event data.
 
 .. seealso::
 
@@ -29,27 +29,27 @@ The typical scenario for reading one to many traces is:
 .. class:: TraceCollection
    :noindex:
 
-   Collection of opened traces.
+   A collection of opened traces.
 
 .. class:: TraceHandle
    :noindex:
 
-   Handle allowing the user to manipulate a specific trace directly.
+   A trace handle. Allows the user to manipulate a specific trace directly.
 
 .. class:: Event
    :noindex:
 
-   Trace event.
+   An event.
 
 .. exception:: FieldError
    :noindex:
 
-   Field error, raised when a field's value cannot be accessed.
+   A field error. Raised when a field's value cannot be accessed.
 
-The second category of reader API types is a set of declaration classes
-that are returned when inspecting the layout of a trace's events,
-through :attr:`TraceHandle.events`. The following classes are not meant
-to be instantiated by the user:
+The second category of classes is a set of declaration classes that
+are returned when inspecting the layout of a trace's events, through
+:attr:`TraceHandle.events`. The following classes are not meant to be
+instantiated by the user:
 
 .. class:: EventDeclaration
    :noindex:

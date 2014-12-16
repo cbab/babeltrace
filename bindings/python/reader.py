@@ -6,18 +6,16 @@ from datetime import datetime
 
 
 class TraceCollection:
-    """
-    A :class:`TraceCollection` is a collection of opened traces.
+    """A :class:`TraceCollection` is a collection of opened traces.
 
-    In general, once a trace collection is created, you add one to many
-    independent traces to it using :meth:`add_trace` or
-    :meth:`add_traces_recursive`, and then iterate the ordered events
-    of all traces merged together using :attr:`events`.
+    Once a trace collection is created, you can add traces to the
+    collection by using the :meth:`add_trace` or
+    :meth:`add_traces_recursive`, and then iterate on the merged
+    events using :attr:`events`.
 
     You may use :meth:`remove_trace` to close and remove a specific
-    trace from a trace collection, although all the traces of a given
-    trace collection will be automatically removed when it is garbage
-    collected.
+    trace from a trace collection.
+
     """
 
     def __init__(self):
@@ -34,20 +32,18 @@ class TraceCollection:
         """
         Adds a trace to the trace collection.
 
-        The trace is located at the file system path *path*. This
-        function **does not** recurse directories to find the trace:
-        *path* must point to the exact trace location (see
-        :meth:`add_traces_recursive` for a recursive version of this
-        function).
+        *path* indicate the exact path of the trace on the filesystem.
 
-        *format_str* is a string indicating the Babeltrace type of the
-        trace to add. ``ctf`` is the only currently supported trace
-        format.
-
-        Once added, the trace is opened.
+        *format_str* is a string indicating the type of trace to
+        add. ``ctf`` is currently the only supported trace format.
 
         Returns the corresponding :class:`TraceHandle` instance for
         this opened trace on success, or ``None`` on error.
+
+        This function **does not** recurse directories to find a
+        trace.  See :meth:`add_traces_recursive` for a recursive
+        version of this function.
+
         """
 
         ret = nbt._bt_context_add_trace(self._tc, path, format_str,
@@ -67,14 +63,14 @@ class TraceCollection:
         Adds traces to this trace collection by recursively searching
         in the *path* directory.
 
-        *format_str* is a string indicating the Babeltrace type of the
-        traces to find and add. ``ctf`` is the only currently supported
-        trace format.
-
-        See also :meth:`add_trace`.
+        *format_str* is a string indicating the type of trace to
+        add. ``ctf`` is currently the only supported trace format.
 
         Returns a :class:`dict` object mapping full paths to trace
         handles for each trace found, or ``None`` on error.
+
+        See also :meth:`add_trace`.
+
         """
 
         trace_handles = {}
@@ -99,13 +95,9 @@ class TraceCollection:
 
     def remove_trace(self, trace_handle):
         """
-        Removes a trace from the trace collection using its trace
-        handle *trace_handle*.
+        Removes a trace from the trace collection.
 
-        :class:`TraceHandle` objects are returned by :meth:`add_trace`
-        and :meth:`add_traces_recursive`.
-
-        The trace is closed before being removed.
+        *trace_handle* the handle of the trace to removed from the collection.
         """
 
         try:
@@ -117,19 +109,13 @@ class TraceCollection:
     def events(self):
         """
         Generates the ordered :class:`Event` objects of all the opened
-        traces contained in this trace collection. Iterate this function
-        to iterate actual events.
+        traces contained in this trace collection.
 
         Due to limitations of the native Babeltrace API, only one event
         may be "alive" at a given time, i.e. a user **should never**
         store a copy of the events returned by this function for
         ulterior use. Users shall make sure to copy the information
         they need *from* an event before accessing the next one.
-
-        Furthermore, :class:`Event` objects become invalid when the
-        generator goes out of scope as the underlying iterator will be
-        reclaimed. Using an event after the the generator has gone out
-        of scope may result in a crash or data corruption.
         """
 
         begin_pos_ptr = nbt._bt_iter_pos()
@@ -145,6 +131,10 @@ class TraceCollection:
         Generates the ordered :class:`Event` objects of all the opened
         traces contained in this trace collection from *timestamp_begin*
         to *timestamp_end*.
+
+        *timestamp_begin* The beginning timestamp. In nanoseconds since epoch.
+
+        *timestamp_end* The ending timestamp. In nanoseconds since epoch.
 
         See :attr:`events` for notes and limitations.
         """
@@ -296,9 +286,6 @@ class TraceHandle:
         """
         Generates all the :class:`EventDeclaration` objects of the
         underlying trace.
-
-        Note that this doesn't generate actual trace *events*, but
-        rather their declarations, i.e. their layouts and metadata.
         """
 
         ret = nbt._bt_python_event_decl_listcaller(self.id,
@@ -433,7 +420,7 @@ class Event(collections.Mapping):
         scope *scope*, or ``None`` if the field cannot be found.
 
         *scope* must be one of :class:`babeltrace.common.CTFScope`
-        constants meowmeow.
+        constants.
         """
 
         if scope not in _scopes:
@@ -750,7 +737,7 @@ class FieldDeclaration:
     @property
     def name(self):
         """
-        Field's name, or ``None`` on error.
+        Field name, or ``None`` on error.
         """
 
         return self._name
@@ -758,7 +745,7 @@ class FieldDeclaration:
     @property
     def type(self):
         """
-        Field's type (one of :class:`babeltrace.common.CTFTypeId`
+        Field type (one of :class:`babeltrace.common.CTFTypeId`
         constants).
         """
 
@@ -767,7 +754,7 @@ class FieldDeclaration:
     @property
     def scope(self):
         """
-        Field's scope (one of:class:`babeltrace.common.CTFScope`
+        Field scope (one of:class:`babeltrace.common.CTFScope`
         constants).
         """
 
@@ -793,7 +780,7 @@ class IntegerFieldDeclaration(FieldDeclaration):
     @property
     def base(self):
         """
-        Integer's base (:class:`int`), or a negative value on error.
+        Integer base (:class:`int`), or a negative value on error.
         """
 
         return nbt._bt_ctf_get_int_base(self._fd)
@@ -801,7 +788,7 @@ class IntegerFieldDeclaration(FieldDeclaration):
     @property
     def byte_order(self):
         """
-        Integer's byte order (one of
+        Integer byte order (one of
         :class:`babeltrace.common.ByteOrder` constants).
         """
 
@@ -817,7 +804,7 @@ class IntegerFieldDeclaration(FieldDeclaration):
     @property
     def size(self):
         """
-        Integer's size in bits, or a negative value on error.
+        Integer size in bits, or a negative value on error.
         """
         return nbt._bt_ctf_get_int_len(self._fd)
 
@@ -828,7 +815,7 @@ class IntegerFieldDeclaration(FieldDeclaration):
     @property
     def encoding(self):
         """
-        Integer's encoding (one of
+        Integer encoding (one of
         :class:`babeltrace.common.CTFStringEncoding` constants).
         """
 
@@ -859,7 +846,7 @@ class ArrayFieldDeclaration(FieldDeclaration):
     @property
     def length(self):
         """
-        Static array's fixed length (number of contained elements), or
+        Static array fixed length (number of contained elements), or
         a negative value on error.
         """
 

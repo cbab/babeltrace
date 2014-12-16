@@ -54,9 +54,9 @@ class Clock:
     @property
     def name(self):
         """
-        Clock's name.
+        Clock name.
 
-        Set this attribute to change the clock's name.
+        Set this attribute to change the clock name.
 
         :exc:`ValueError` is raised on error.
         """
@@ -71,9 +71,9 @@ class Clock:
     @property
     def description(self):
         """
-        Clock's description (string).
+        Clock description (string).
 
-        Set this attribute to change the clock's description.
+        Set this attribute to change the clock description.
 
         :exc:`ValueError` is raised on error.
         """
@@ -90,9 +90,9 @@ class Clock:
     @property
     def frequency(self):
         """
-        Clock's frequency in Hz (integer).
+        Clock frequency in Hz (integer).
 
-        Set this attribute to change the clock's frequency.
+        Set this attribute to change the clock frequency.
 
         :exc:`ValueError` is raised on error.
         """
@@ -114,9 +114,9 @@ class Clock:
     @property
     def precision(self):
         """
-        Clock's precision in clock ticks (integer).
+        Clock precision in clock ticks (integer).
 
-        Set this attribute to change the clock's precision.
+        Set this attribute to change the clock precision.
 
         :exc:`ValueError` is raised on error.
         """
@@ -135,9 +135,9 @@ class Clock:
     @property
     def offset_seconds(self):
         """
-        Clock's offset in seconds since POSIX.1 Epoch (integer).
+        Clock offset in seconds since POSIX.1 Epoch (integer).
 
-        Set this attribute to change the clock's offset in seconds.
+        Set this attribute to change the clock offset in seconds.
 
         :exc:`ValueError` is raised on error.
         """
@@ -159,10 +159,10 @@ class Clock:
     @property
     def offset(self):
         """
-        Clock's offset in ticks since (POSIX.1 Epoch +
+        Clock offset in ticks since (POSIX.1 Epoch +
         :attr:`offset_seconds`).
 
-        Set this attribute to change the clock's offset.
+        Set this attribute to change the clock offset.
 
         :exc:`ValueError` is raised on error.
         """
@@ -185,9 +185,9 @@ class Clock:
     def absolute(self):
         """
         ``True`` if this clock is absolute, i.e. if the clock is a global
-        reference across the trace's other clocks.
+        reference across the trace other clocks.
 
-        Set this attribute to change the clock's absolute state (boolean).
+        Set this attribute to change the clock absolute state (boolean).
 
         :exc:`ValueError` is raised on error.
         """
@@ -204,14 +204,14 @@ class Clock:
         ret = nbt._bt_ctf_clock_set_is_absolute(self._c, int(is_absolute))
 
         if ret < 0:
-            raise ValueError("Could not set the clock's absolute attribute.")
+            raise ValueError("Could not set the clock absolute attribute.")
 
     @property
     def uuid(self):
         """
-        Clock's UUID (an :class:`uuid.UUID` object).
+        Clock UUID (an :class:`uuid.UUID` object).
 
-        Set this attribute to change the clock's UUID.
+        Set this attribute to change the clock UUID.
 
         :exc:`ValueError` is raised on error.
         """
@@ -245,10 +245,10 @@ class Clock:
     @property
     def time(self):
         """
-        Clock's current time; nanoseconds (integer) since clock's origin
+        Clock current time; nanoseconds (integer) since clock origin
         (POSIX.1 Epoch + :attr:`offset_seconds` + :attr:`offset`).
 
-        Set this attribute to change the clock's current time.
+        Set this attribute to change the clock current time.
 
         :exc:`ValueError` is raised on error.
         """
@@ -341,9 +341,9 @@ class FieldDeclaration:
     @property
     def alignment(self):
         """
-        Field's alignment in bits (integer).
+        Field alignment in bits (integer).
 
-        Set this attribute to change this field's alignment.
+        Set this attribute to change this field alignment.
 
         :exc:`ValueError` is raised on error.
         """
@@ -360,10 +360,10 @@ class FieldDeclaration:
     @property
     def byte_order(self):
         """
-        Field's byte order (one of :class:`babeltrace.common.ByteOrder`
+        Field byte order (one of :class:`babeltrace.common.ByteOrder`
         constants).
 
-        Set this attribute to change this field's byte order.
+        Set this attribute to change this field byte order.
 
         :exc:`ValueError` is raised on error.
         """
@@ -396,9 +396,9 @@ class IntegerFieldDeclaration(FieldDeclaration):
     @property
     def size(self):
         """
-        Integer's size in bits (integer).
+        Integer size in bits (integer).
 
-        Set this attribute to change this integer's size.
+        Set this attribute to change this integer size.
 
         :exc:`ValueError` is raised on error.
         """
@@ -406,7 +406,7 @@ class IntegerFieldDeclaration(FieldDeclaration):
         ret = nbt._bt_ctf_field_type_integer_get_size(self._ft)
 
         if ret < 0:
-            raise ValueError("Could not get Integer's size attribute.")
+            raise ValueError("Could not get Integer size attribute.")
         else:
             return ret
 
@@ -415,7 +415,7 @@ class IntegerFieldDeclaration(FieldDeclaration):
         """
         ``True`` if this integer is signed.
 
-        Set this attribute to change this integer's signedness (boolean).
+        Set this attribute to change this integer signedness (boolean).
 
         :exc:`ValueError` is raised on error.
         """
@@ -423,7 +423,7 @@ class IntegerFieldDeclaration(FieldDeclaration):
         ret = nbt._bt_ctf_field_type_integer_get_signed(self._ft)
 
         if ret < 0:
-            raise ValueError("Could not get Integer's signed attribute.")
+            raise ValueError("Could not get Integer signed attribute.")
         elif ret > 0:
             return True
         else:
@@ -434,14 +434,14 @@ class IntegerFieldDeclaration(FieldDeclaration):
         ret = nbt._bt_ctf_field_type_integer_set_signed(self._ft, signed)
 
         if ret < 0:
-            raise ValueError("Could not set Integer's signed attribute.")
+            raise ValueError("Could not set Integer signed attribute.")
 
     @property
     def base(self):
         """
-        Integer's display base (one of :class:`IntegerBase` constants).
+        Integer display base (one of :class:`IntegerBase` constants).
 
-        Set this attribute to change this integer's display base.
+        Set this attribute to change this integer display base.
 
         :exc:`ValueError` is raised on error.
         """
@@ -453,15 +453,15 @@ class IntegerFieldDeclaration(FieldDeclaration):
         ret = nbt._bt_ctf_field_type_integer_set_base(self._ft, base)
 
         if ret < 0:
-            raise ValueError("Could not set Integer's base.")
+            raise ValueError("Could not set Integer base.")
 
     @property
     def encoding(self):
         """
-        Integer's encoding (one of
+        Integer encoding (one of
         :class:`babeltrace.common.CTFStringEncoding` constants).
 
-        Set this attribute to change this integer's encoding.
+        Set this attribute to change this integer encoding.
 
         :exc:`ValueError` is raised on error.
         """
@@ -473,7 +473,7 @@ class IntegerFieldDeclaration(FieldDeclaration):
         ret = nbt._bt_ctf_field_type_integer_set_encoding(self._ft, encoding)
 
         if ret < 0:
-            raise ValueError("Could not set Integer's encoding.")
+            raise ValueError("Could not set Integer encoding.")
 
 
 class EnumerationFieldDeclaration(FieldDeclaration):
@@ -502,7 +502,7 @@ class EnumerationFieldDeclaration(FieldDeclaration):
     @property
     def container(self):
         """
-        Underlying container's :class:`IntegerFieldDeclaration`.
+        Underlying container :class:`IntegerFieldDeclaration`.
 
         :exc:`TypeError` is raised on error.
         """
@@ -666,11 +666,11 @@ class FloatingPointFieldDeclaration(FieldDeclaration):
     @property
     def exponent_digits(self):
         """
-        Floating point number's exponent section's size in bits
+        Floating point number exponent section size in bits
         (integer).
 
-        Set this attribute to change the floating point number's
-        exponent section's size. You may use :attr:`FLT_EXP_DIG` or
+        Set this attribute to change the floating point number
+        exponent section size. You may use :attr:`FLT_EXP_DIG` or
         :attr:`DBL_EXP_DIG` for IEEE 754 floating point numbers.
 
         :exc:`ValueError` is raised on error.
@@ -695,11 +695,11 @@ class FloatingPointFieldDeclaration(FieldDeclaration):
     @property
     def mantissa_digits(self):
         """
-        Floating point number's mantissa section's size in bits
+        Floating point number mantissa section size in bits
         (integer).
 
-        Set this attribute to change the floating point number's
-        mantissa section's size. You may use :attr:`FLT_MANT_DIG` or
+        Set this attribute to change the floating point number
+        mantissa section size. You may use :attr:`FLT_MANT_DIG` or
         :attr:`DBL_MANT_DIG` for IEEE 754 floating point numbers.
 
         :exc:`ValueError` is raised on error.
@@ -744,7 +744,7 @@ class StructureFieldDeclaration(FieldDeclaration):
     def add_field(self, field_type, field_name):
         """
         Appends one :class:`FieldDeclaration` *field_type* named
-        *field_name* to the structure's ordered map.
+        *field_name* to the structure ordered map.
 
         :exc:`ValueError` is raised on error.
         """
@@ -834,7 +834,7 @@ class VariantFieldDeclaration(FieldDeclaration):
     @property
     def tag_name(self):
         """
-        Variant field declaration's tag name.
+        Variant field declaration tag name.
 
         :exc:`TypeError` is raised on error.
         """
@@ -849,7 +849,7 @@ class VariantFieldDeclaration(FieldDeclaration):
     @property
     def tag_type(self):
         """
-        Variant field declaration's tag field declaration
+        Variant field declaration tag field declaration
         (:class:`EnumerationFieldDeclaration` object).
 
         :exc:`TypeError` is raised on error.
@@ -865,7 +865,7 @@ class VariantFieldDeclaration(FieldDeclaration):
     def add_field(self, field_type, field_name):
         """
         Registers the :class:`FieldDeclaration` object *field_type*
-        as the variant's selected type when the variant's tag's current
+        as the variant selected type when the variant tag current
         label is *field_name*.
 
         :exc:`ValueError` is raised on error.
@@ -911,7 +911,7 @@ class VariantFieldDeclaration(FieldDeclaration):
     def get_field_by_name(self, name):
         """
         Returns the :class:`FieldDeclaration` selected when the
-        variant's tag's current label is *name*.
+        variant tag current label is *name*.
 
         :exc:`TypeError` is raised on error.
         """
@@ -962,7 +962,7 @@ class ArrayFieldDeclaration(FieldDeclaration):
     @property
     def element_type(self):
         """
-        Type of this static array's elements (subclass of
+        Type of this static array elements (subclass of
         :class:`FieldDeclaration`).
 
         :exc:`TypeError` is raised on error.
@@ -978,7 +978,7 @@ class ArrayFieldDeclaration(FieldDeclaration):
     @property
     def length(self):
         """
-        Static array's length (integer).
+        Static array length (integer).
 
         :exc:`TypeError` is raised on error.
         """
@@ -1014,7 +1014,7 @@ class SequenceFieldDeclaration(FieldDeclaration):
     @property
     def element_type(self):
         """
-        Type of this sequence's elements (subclass of
+        Type of this sequence elements (subclass of
         :class:`FieldDeclaration`).
 
         :exc:`TypeError` is raised on error.
@@ -1062,10 +1062,10 @@ class StringFieldDeclaration(FieldDeclaration):
     @property
     def encoding(self):
         """
-        String's encoding (one of
+        String encoding (one of
         :class:`babeltrace.common.CTFStringEncoding` constants).
 
-        Set this attribute to change this string's encoding.
+        Set this attribute to change this string encoding.
 
         :exc:`ValueError` is raised on error.
         """
@@ -1154,7 +1154,7 @@ class Field:
     @property
     def declaration(self):
         """
-        Field's declaration (subclass of :class:`FieldDeclaration`).
+        Field declaration (subclass of :class:`FieldDeclaration`).
 
         :exc:`TypeError` is raised on error.
         """
@@ -1177,7 +1177,7 @@ class IntegerField(Field):
         """
         Integer value (:class:`int`).
 
-        Set this attribute to change the integer field's value.
+        Set this attribute to change the integer field value.
 
         :exc:`ValueError` or :exc:`TypeError` are raised on error.
         """
@@ -1200,7 +1200,7 @@ class IntegerField(Field):
     @value.setter
     def value(self, value):
         if not isinstance(value, int):
-            raise TypeError("IntegerField's value must be an int")
+            raise TypeError("IntegerField value must be an int")
 
         signedness = nbt._bt_python_field_integer_get_signedness(self._f)
         if signedness < 0:
@@ -1224,7 +1224,7 @@ class EnumerationField(Field):
     @property
     def container(self):
         """
-        Underlying container's :class:`IntegerField`.
+        Underlying container :class:`IntegerField`.
 
         :exc:`TypeError` is raised on error.
         """
@@ -1240,10 +1240,10 @@ class EnumerationField(Field):
     @property
     def value(self):
         """
-        Current enumeration field's label (:class:`str`).
+        Current enumeration field label (:class:`str`).
 
         Set this attribute to an integer (:class:`int`) to change the
-        enumeration field's value.
+        enumeration field value.
 
         :exc:`ValueError` is raised on error.
         """
@@ -1251,7 +1251,7 @@ class EnumerationField(Field):
         value = nbt._bt_ctf_field_enumeration_get_mapping_name(self._f)
 
         if value is None:
-            raise ValueError("Could not get enumeration's mapping name.")
+            raise ValueError("Could not get enumeration mapping name.")
 
         return value
 
@@ -1274,7 +1274,7 @@ class FloatingPointField(Field):
         """
         Floating point number value (:class:`float`).
 
-        Set this attribute to change the floating point number field's
+        Set this attribute to change the floating point number field
         value.
 
         :exc:`ValueError` or :exc:`TypeError` are raised on error.
@@ -1378,9 +1378,9 @@ class SequenceField(Field):
     @property
     def length(self):
         """
-        Sequence length's integer field (:class:`IntegerField`).
+        Sequence length integer field (:class:`IntegerField`).
 
-        Set this attribute to change the sequence length's integer
+        Set this attribute to change the sequence length integer
         field (integer must be unsigned).
 
         :exc:`ValueError` or :exc:`TypeError` are raised on error.
@@ -1429,9 +1429,9 @@ class StringField(Field):
     @property
     def value(self):
         """
-        String's value (:class:`str`).
+        String value (:class:`str`).
 
-        Set this attribute to change the string's value.
+        Set this attribute to change the string value.
 
         :exc:`ValueError` or :exc:`TypeError` are raised on error.
         """
@@ -1501,7 +1501,7 @@ class EventClass:
     @property
     def name(self):
         """
-        Event class' name.
+        Event class name.
         """
 
         name = nbt._bt_ctf_event_class_get_name(self._ec)
@@ -1514,7 +1514,7 @@ class EventClass:
     @property
     def id(self):
         """
-        Event class' numeric ID.
+        Event class numeric ID.
 
         Set this attribute to assign a numeric ID to this event class.
         This ID must be unique amongst all the event class IDs of a
@@ -1535,7 +1535,7 @@ class EventClass:
         ret = nbt._bt_ctf_event_class_set_id(self._ec, id)
 
         if ret < 0:
-            raise TypeError("Can't change an Event Class's id after it has been assigned to a stream class")
+            raise TypeError("Can't change an Event Class id after it has been assigned to a stream class")
 
     @property
     def stream_class(self):
@@ -1566,19 +1566,19 @@ class EventClass:
         count = nbt._bt_ctf_event_class_get_field_count(self._ec)
 
         if count < 0:
-            raise TypeError("Could not get EventClass' field count")
+            raise TypeError("Could not get EventClass field count")
 
         for i in range(count):
             field_name = nbt._bt_python_ctf_event_class_get_field_name(self._ec, i)
 
             if field_name is None:
-                msg = "Could not get EventClass' field name at index {}".format(i)
+                msg = "Could not get EventClass field name at index {}".format(i)
                 raise TypeError(msg)
 
             field_type_native = nbt._bt_python_ctf_event_class_get_field_type(self._ec, i)
 
             if field_type_native is None:
-                msg = "Could not get EventClass' field type at index {}".format(i)
+                msg = "Could not get EventClass field type at index {}".format(i)
                 raise TypeError(msg)
 
             field_type = FieldDeclaration._create_field_declaration_from_native_instance(field_type_native)
@@ -1646,7 +1646,7 @@ class Event:
     def clock(self):
         """
         :class:`Clock` object used by this object, or ``None`` if
-        the event's class is not registered to a stream class.
+        the event class is not registered to a stream class.
         """
 
         clock_instance = nbt._bt_ctf_event_get_clock(self._e)
@@ -1664,7 +1664,7 @@ class Event:
         Returns the :class:`Field` object named *field_name* in this
         event.
 
-        The returned field object is created using the event class'
+        The returned field object is created using the event class
         field declaration named *field_name*.
 
         The return type is one of:
@@ -1691,10 +1691,10 @@ class Event:
 
     def set_payload(self, field_name, value_field):
         """
-        Set the event's field named *field_name* to the manually
+        Set the event field named *field_name* to the manually
         created :class:`Field` object *value_field*.
 
-        *value_field*'s type must be one of:
+        *value_field* type must be one of:
 
         * :class:`IntegerField`
         * :class:`FloatingPointField`
@@ -1749,7 +1749,7 @@ class StreamClass:
     @property
     def name(self):
         """
-        Stream class' name.
+        Stream class name.
 
         :exc:`TypeError` is raised on error.
         """
@@ -1764,7 +1764,7 @@ class StreamClass:
     @property
     def clock(self):
         """
-        Stream class' clock (:class:`Clock` object).
+        Stream class clock (:class:`Clock` object).
 
         Set this attribute to change the clock of this stream class.
 
@@ -1794,7 +1794,7 @@ class StreamClass:
     @property
     def id(self):
         """
-        Stream class' numeric ID.
+        Stream class numeric ID.
 
         Set this attribute to change the ID of this stream class.
 
@@ -1827,13 +1827,13 @@ class StreamClass:
         count = nbt._bt_ctf_stream_class_get_event_class_count(self._sc)
 
         if count < 0:
-            raise TypeError("Could not get StreamClass' event class count")
+            raise TypeError("Could not get StreamClass event class count")
 
         for i in range(count):
             event_class_native = nbt._bt_ctf_stream_class_get_event_class(self._sc, i)
 
             if event_class_native is None:
-                msg = "Could not get StreamClass' event class at index {}".format(i)
+                msg = "Could not get StreamClass event class at index {}".format(i)
                 raise TypeError(msg)
 
             event_class = EventClass.__new__(EventClass)
@@ -1930,7 +1930,7 @@ class Stream:
         ret, count = nbt._bt_ctf_stream_get_discarded_events_count(self._s)
 
         if ret < 0:
-            raise ValueError("Could not get the stream's discarded events count")
+            raise ValueError("Could not get the stream discarded events count")
 
         return count
 
@@ -1945,7 +1945,7 @@ class Stream:
         """
         Appends event *event* (:class:`Event` object) to this stream.
 
-        The stream's associated clock will be sampled during this call.
+        The stream associated clock will be sampled during this call.
         *event* **shall not** be modified after being appended to this
         stream.
 
@@ -1960,7 +1960,7 @@ class Stream:
     @property
     def packet_context(self):
         """
-        Stream packet context's field (instance of
+        Stream packet context field (instance of
         :class:`StructureField`).
 
         Set this attribute to assign a stream packet context field
@@ -1988,7 +1988,7 @@ class Stream:
 
     def flush(self):
         """
-        Flushes the stream's current packet to disk. Events
+        Flushes the stream current packet to disk. Events
         subsequently appended to the stream will be added to a new
         packet.
 
@@ -2077,14 +2077,14 @@ class Writer:
     @property
     def metadata(self):
         """
-        Trace's current TSDL metadata (:class:`str`).
+        The current trace metadata (:class:`str`).
         """
 
         return nbt._bt_ctf_writer_get_metadata_string(self._w)
 
     def flush_metadata(self):
         """
-        Flushes the trace's metadata to the metadata file.
+        Flushes the trace metadata to the metadata file.
         """
 
         nbt._bt_ctf_writer_flush_metadata(self._w)
@@ -2092,7 +2092,7 @@ class Writer:
     @property
     def byte_order(self):
         """
-        Trace's native byte order (one of
+        The trace native byte order (one of
         :class:`babeltrace.common.ByteOrder` constants).
 
         This is the actual byte order that is used when a field
@@ -2100,7 +2100,7 @@ class Writer:
         :attr:`babeltrace.common.ByteOrder.BYTE_ORDER_NATIVE`
         value.
 
-        Set this attribute to change the trace's native byte order.
+        Set this attribute to change the trace native byte order.
 
         :exc:`ValueError` is raised on error.
         """
@@ -2112,4 +2112,4 @@ class Writer:
         ret = nbt._bt_ctf_writer_set_byte_order(self._w, byte_order)
 
         if ret < 0:
-            raise ValueError("Could not set trace's byte order.")
+            raise ValueError("Could not set trace byte order.")

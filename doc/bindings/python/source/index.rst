@@ -3,53 +3,46 @@ Welcome!
 ########
 
 Welcome to `Babeltrace <http://www.efficios.com/babeltrace>`_'s
-Python binding's documentation!
+Python bindings' documentation!
 
 Babeltrace is a trace format converter. It is able to read and write
-different trace formats, one of them being
-`CTF <http://www.efficios.com/ctf>`_ (the Common Trace Format), as
-Babeltrace also acts as the reference reader/writer implementation
-for this format.
+different trace formats, such as the `Common Trace Format
+<http://www.efficios.com/ctf>`_ (CTF). Babeltrace also acts as the CTF
+reference implementation.
 
-The Babeltrace Python binding sits on top of ``libbabeltrace``, the
+The Babeltrace Python bindings rely on the ``libbabeltrace`` library, the
 current public C API of Babeltrace.
 
 
 Installing
 ----------
 
-The Python binding may be enabled when configuring Babeltrace's build::
+The Python bindings may be enabled when configuring Babeltrace's build::
 
     ./configure --enable-python-bindings
 
-On Debian and Ubuntu, it is available in the ``python3-babeltrace``
+On Debian and Ubuntu, the Python bindings are available in the ``python3-babeltrace``
 package.
 
 .. note::
 
-   Currently, the Babeltrace Python binding only works with Python 3.
+   Currently, the Babeltrace Python bindings only works with Python 3.
 
 
-Binding
--------
+Bindings
+--------
 
-The Babeltrace Python binding is available as a single Python package,
+The Babeltrace Python bindings are available as a single Python package,
 :py:mod:`babeltrace`.
 
-The Babeltrace Python binding's application programming interface is
-divided into two parts:
+The Babeltrace Python bindings' API is divided into two parts:
 
 * The :ref:`reader API <reader-api>` is exposed by the
   :mod:`babeltrace.reader` module, a set of classes used to
-  open a collection of different traces an iterate their events.
+  open a collection of different traces and iterate on their events.
 * The :ref:`CTF writer API <ctf-writer-api>` is exposed by the
   :mod:`babeltrace.writer` module, which makes it possible to
-  write a complete `CTF <http://www.efficios.com/ctf>`_
-  (Common Trace Format) trace from scratch.
-
-Both modules make use of :mod:`babeltrace.common`, which contains
-various :ref:`constants <constants>` used by both the reader and CTF
-writer sides.
+  write a complete `CTF <http://www.efficios.com/ctf>`_ trace from scratch.
 
 .. note::
 

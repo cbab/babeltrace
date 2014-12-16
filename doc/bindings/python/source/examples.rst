@@ -4,8 +4,8 @@
 Examples
 ********
 
-This section presents a few short and very straightforward examples
-of how to use the Babeltrace Python binding.
+This section presents a few short and straightforward examples
+of Babeltrace Python bindings usage.
 
 The examples are divided into two categories: those which demonstrate
 the :ref:`reader API <reader-api>`, and those which demonstrate
@@ -18,25 +18,25 @@ Reader API examples
 ===================
 
 The :ref:`reader API <reader-api>` includes everything needed to open
-one to many traces, and iterate their events in order.
-
+traces and iterate on events in order.
 
 Open one trace and print all event names
 ----------------------------------------
 
-This minimalist example shows how to open a single CTF trace (its
-path is read from the first command line argument here), iterate all
-its events, and print their names.
+This example shows how to open a single CTF trace, iterate on all the events,
+and print their names.
 
 .. code-block:: python
 
    import babeltrace.reader
    import sys
 
+   # Get trace path from the command line
+   trace_path = sys.argv[1]
 
    trace_collection = babeltrace.reader.TraceCollection()
 
-   trace_collection.add_trace(sys.argv[1], 'ctf')
+   trace_collection.add_trace(trace_path, 'ctf')
 
    for event in trace_collection.events:
        print(event.name)
@@ -64,7 +64,7 @@ and prints a list of their field names.
        print(', '.join(event.keys()))
 
 
-Print a specific event's field
+Print a specific event field
 ------------------------------
 
 Reading the field value of an :class:`babeltrace.reader.Event` object
@@ -82,7 +82,7 @@ event contains a given field name:
    if 'field_name' in event:
        # ...
 
-The following example iterates the events of a trace (its path is read
+The following example iterates on the events of a trace (its path is read
 from the first command line argument here), and prints the value of the
 ``fd`` field if it's available.
 

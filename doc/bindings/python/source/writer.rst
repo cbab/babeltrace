@@ -6,17 +6,15 @@ CTF writer API
 
 .. currentmodule:: babeltrace.writer
 
-The **CTF writer API** is the part of the Babeltrace Python binding
-that allows you to write native `CTF <http://www.efficios.com/ctf>`_
-(Common Trace Format) traces from a Python environment.
+The **CTF writer API** allows to write native `CTF
+<http://www.efficios.com/ctf>`_ traces from a Python environment.
 
-A CTF trace is made of one to many CTF streams. Streams contain
-packets, which in turn contain serialized events. This is why events
-are appended to individual streams in this API. CTF readers, like
-Babeltrace, are able to merge streams and iterate events in order
+A CTF trace is made of one or more CTF streams. Streams contain
+packets, which in turn contain serialized events. CTF readers, such as
+Babeltrace, are able to merge streams and iterate on events in order
 when reading a CTF trace.
 
-All the CTF writer API is exposed as a set of classes from the
+The CTF writer API is exposed as a set of classes available in the
 :mod:`babeltrace.writer` module.
 
 .. seealso::
@@ -35,8 +33,7 @@ all concrete fields carry a value and a field declaration reference.
 The same applies to event classes vs. events, as well as to stream
 classes vs. streams.
 
-The main interface for actually writing a CTF trace is the
-:class:`Writer` class:
+The main interface to write a CTF trace is the :class:`Writer` class:
 
 .. class:: Writer
    :noindex:
@@ -172,36 +169,7 @@ values. Those fields are instances of the following types:
    Variant (dynamic selection between different field declarations)
    field.
 
-The subclass relationship for the CTF writer API is the following::
-
-    object
-        FieldDeclaration
-            IntegerFieldDeclaration
-            FloatingPointFieldDeclaration
-            EnumerationFieldDeclaration
-            StringFieldDeclaration
-            ArrayFieldDeclaration
-            SequenceFieldDeclaration
-            StructureFieldDeclaration
-            VariantFieldDeclaration
-        Field
-            IntegerField
-            FloatingPointField
-            EnumerationField
-            StringField
-            ArrayField
-            SequenceField
-            StructureField
-            VariantField
-        EnumerationMapping
-        EventClass
-        Event
-        Clock
-        StreamClass
-        Stream
-        Writer
-
-Most of those classes' methods and properties raise :exc:`ValueError`
+Most of these classes' methods and properties raise :exc:`ValueError`
 on error.
 
 
